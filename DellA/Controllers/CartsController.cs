@@ -78,8 +78,6 @@ namespace DellA.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            db.Carts.Add(cart);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = cart.Id }, cart);
@@ -113,6 +111,23 @@ namespace DellA.Controllers
         private bool CartExists(int id)
         {
             return db.Carts.Count(e => e.Id == id) > 0;
+        }
+
+        [HttpGet]
+        public IHttpActionResult calculateCart(string username)
+        {
+            decimal totalprice = 0;
+            if (username == null)
+            {
+                return NotFound();
+            }
+
+            var filter = db.Carts.Where(m => m.userName == username).ToList();
+            foreach (var item in filter) 
+            {
+                totalprice += item.Price;
+            }
+            return Ok(totalprice);
         }
     }
 }
