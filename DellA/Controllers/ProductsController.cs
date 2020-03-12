@@ -190,7 +190,7 @@ namespace DellA.Controllers
         public IHttpActionResult searchFilter(string type, decimal price)
         {
             var allproducts = db.Products.ToList();
-            if (type == null && price == 0)
+            if (type == null || price == 0)
             {
                 return Ok(allproducts);
             }
