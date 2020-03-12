@@ -187,15 +187,15 @@ namespace DellA.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult searchFilter(string type, decimal price)
+        public IHttpActionResult searchFilter(string category, decimal price)
         {
             var allproducts = db.Products.ToList();
-            if (type == null || price == 0)
+            if (category == null || price == 0)
             {
                 return Ok(allproducts);
             }
             
-            var filter = db.Products.Where(m => m.Type == type && m.Price >= price).ToList();
+            var filter = db.Products.Where(m => m.Category == category && m.Price >= price).ToList();
 
             return Ok(filter);
 
