@@ -13,5 +13,6 @@ namespace DellA.Models
         public string Type { get; set; }
         public string Rating { get; set; }
         public decimal Price { get; set; }
+        public string Image { get; set; }
     }
 }

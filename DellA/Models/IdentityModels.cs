@@ -29,5 +29,7 @@ namespace DellA.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<DellA.Models.Product> Products { get; set; }
     }
 }
