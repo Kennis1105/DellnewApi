@@ -12,44 +12,44 @@ using DellA.Models;
 
 namespace DellA.Controllers
 {
-    public class ProductsController : ApiController
+    public class CartsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Products
-        public IQueryable<Product> GetProducts()
+        // GET: api/Carts
+        public IQueryable<Cart> GetCarts()
         {
-            return db.Products;
+            return db.Carts;
         }
 
-        // GET: api/Products/5
-        [ResponseType(typeof(Product))]
-        public IHttpActionResult GetProduct(int id)
+        // GET: api/Carts/5
+        [ResponseType(typeof(Cart))]
+        public IHttpActionResult GetCart(int id)
         {
-            Product product = db.Products.Find(id);
-            if (product == null)
+            Cart cart = db.Carts.Find(id);
+            if (cart == null)
             {
                 return NotFound();
             }
 
-            return Ok(product);
+            return Ok(cart);
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Carts/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProduct(int id, Product product)
+        public IHttpActionResult PutCart(int id, Cart cart)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != product.Id)
+            if (id != cart.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(product).State = EntityState.Modified;
+            db.Entry(cart).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace DellA.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!CartExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,35 @@ namespace DellA.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Products
-        [ResponseType(typeof(Product))]
-        public IHttpActionResult PostProduct(Product product)
+        // POST: api/Carts
+        [ResponseType(typeof(Cart))]
+        public IHttpActionResult PostCart(Cart cart)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Products.Add(product);
+            db.Carts.Add(cart);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = product.Id }, product);
+            return CreatedAtRoute("DefaultApi", new { id = cart.Id }, cart);
         }
 
-        // DELETE: api/Products/5
-        [ResponseType(typeof(Product))]
-        public IHttpActionResult DeleteProduct(int id)
+        // DELETE: api/Carts/5
+        [ResponseType(typeof(Cart))]
+        public IHttpActionResult DeleteCart(int id)
         {
-            Product product = db.Products.Find(id);
-            if (product == null)
+            Cart cart = db.Carts.Find(id);
+            if (cart == null)
             {
                 return NotFound();
             }
 
-            db.Products.Remove(product);
+            db.Carts.Remove(cart);
             db.SaveChanges();
 
-            return Ok(product);
+            return Ok(cart);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,17 +110,9 @@ namespace DellA.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ProductExists(int id)
+        private bool CartExists(int id)
         {
-            return db.Products.Count(e => e.Id == id) > 0;
+            return db.Carts.Count(e => e.Id == id) > 0;
         }
-
-     
-        public IQueryable<Product> FilterProducts(string userID)
-        {
-
-            return db.Products;
-        }
-
     }
 }

@@ -31,5 +31,7 @@ namespace DellA.Models
         }
 
         public System.Data.Entity.DbSet<DellA.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<DellA.Models.Cart> Carts { get; set; }
     }
 }
