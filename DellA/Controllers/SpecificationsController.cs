@@ -12,44 +12,44 @@ using DellA.Models;
 
 namespace DellA.Controllers
 {
-    public class CartsController : ApiController
+    public class SpecificationsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Carts
-        public IQueryable<Cart> GetCarts()
+        // GET: api/Specifications
+        public IQueryable<Specification> GetSpecifications()
         {
-            return db.Carts;
+            return db.Specifications;
         }
 
-        // GET: api/Carts/5
-        [ResponseType(typeof(Cart))]
-        public IHttpActionResult GetCart(int id)
+        // GET: api/Specifications/5
+        [ResponseType(typeof(Specification))]
+        public IHttpActionResult GetSpecification(int id)
         {
-            Cart cart = db.Carts.Find(id);
-            if (cart == null)
+            Specification specification = db.Specifications.Find(id);
+            if (specification == null)
             {
                 return NotFound();
             }
 
-            return Ok(cart);
+            return Ok(specification);
         }
 
-        // PUT: api/Carts/5
+        // PUT: api/Specifications/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCart(int id, Cart cart)
+        public IHttpActionResult PutSpecification(int id, Specification specification)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != cart.Id)
+            if (id != specification.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(cart).State = EntityState.Modified;
+            db.Entry(specification).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace DellA.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CartExists(id))
+                if (!SpecificationExists(id))
                 {
                     return NotFound();
                 }
@@ -70,33 +70,35 @@ namespace DellA.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Carts
-        [ResponseType(typeof(Cart))]
-        public IHttpActionResult PostCart(Cart cart)
+        // POST: api/Specifications
+        [ResponseType(typeof(Specification))]
+        public IHttpActionResult PostSpecification(Specification specification)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            db.Specifications.Add(specification);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = cart.Id }, cart);
+            return CreatedAtRoute("DefaultApi", new { id = specification.Id }, specification);
         }
 
-        // DELETE: api/Carts/5
-        [ResponseType(typeof(Cart))]
-        public IHttpActionResult DeleteCart(int id)
+        // DELETE: api/Specifications/5
+        [ResponseType(typeof(Specification))]
+        public IHttpActionResult DeleteSpecification(int id)
         {
-            Cart cart = db.Carts.Find(id);
-            if (cart == null)
+            Specification specification = db.Specifications.Find(id);
+            if (specification == null)
             {
                 return NotFound();
             }
 
-            db.Carts.Remove(cart);
+            db.Specifications.Remove(specification);
             db.SaveChanges();
 
-            return Ok(cart);
+            return Ok(specification);
         }
 
         protected override void Dispose(bool disposing)
@@ -108,26 +110,9 @@ namespace DellA.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CartExists(int id)
+        private bool SpecificationExists(int id)
         {
-            return db.Carts.Count(e => e.Id == id) > 0;
-        }
-
-        [HttpGet]
-        public IHttpActionResult calculateCart(string username)
-        {
-            decimal totalprice = 0;
-            if (username == null)
-            {
-                return NotFound();
-            }
-
-            var filter = db.Carts.Where(m => m.userName == username).ToList();
-            foreach (var item in filter) 
-            {
-                totalprice += item.Price;
-            }
-            return Ok(totalprice);
+            return db.Specifications.Count(e => e.Id == id) > 0;
         }
     }
 }

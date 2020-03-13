@@ -115,11 +115,90 @@ namespace DellA.Controllers
             return db.Products.Count(e => e.Id == id) > 0;
         }
 
-     
-        public IQueryable<Product> FilterProducts(string userID)
+        [HttpGet]
+        public IHttpActionResult FilterProducts(int id)
         {
+            Random rnd = new Random();
+            string productType = null, category = null;
+            List<Product> products = new List<Product>();
+            var filter = db.Products
+                .Where(m => m.Id == id).ToList();
+            if (filter == null)
+            {
+                return NotFound();
+            }
+            foreach (var item in filter)
+            {
+                productType = item.Type;
+                category = item.Category;
+            }
+            var newFilter = db.Products.Where(m => m.Type == productType && m.Category != category && m.Id != id).ToList();
+            if (newFilter.Count < 1)
+            {
+                return Ok(products);
+            }
+            else 
+            {
+                while (products.Count < 1)
+                {
+                    Product p = newFilter[rnd.Next(newFilter.Count)];
+                    if (!products.Contains(p))
+                    {
+                        products.Add(p);
+                    }
+                }
+                foreach (var item in filter)
+                {
+                    products.Add(item);
+                }
+            }
+            
+            return Ok(products);
+        }
 
-            return db.Products;
+        [HttpGet]
+        public IHttpActionResult productRecommendation(int id)
+        {
+            string category = null;
+            decimal price = 0;
+            var allproducts = db.Products.Where(m => m.Id != id).ToList();
+            var profilter = db.Products
+                .Where(m => m.Id == id).ToList();
+            if (profilter == null)
+            {
+                return NotFound();
+            }
+            foreach (var item in profilter)
+            {
+                category = item.Category;
+                price = item.Price;
+            }
+            var filter = db.Products.Where(m => m.Category == category && m.Price >= price && m.Id != id).ToList();
+
+            if (filter.Count < 1)
+            {
+                return Ok(allproducts);
+            }
+            else
+            {
+                return Ok(filter);
+            }
+            
+        }
+
+        [HttpGet]
+        public IHttpActionResult searchFilter(string category, decimal price)
+        {
+            var allproducts = db.Products.ToList();
+            if (category == null || price == 0)
+            {
+                return Ok(allproducts);
+            }
+            
+            var filter = db.Products.Where(m => m.Category == category && m.Price >= price).ToList();
+
+            return Ok(filter);
+
         }
 
     }

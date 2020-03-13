@@ -282,6 +282,7 @@
     <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SpecificationsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -302,12 +303,21 @@
     <Compile Include="Migrations\202003121000380_Cart.Designer.cs">
       <DependentUpon>202003121000380_Cart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003122309474_specification.cs" />
+    <Compile Include="Migrations\202003122309474_specification.Designer.cs">
+      <DependentUpon>202003122309474_specification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003122325507_ram.cs" />
+    <Compile Include="Migrations\202003122325507_ram.Designer.cs">
+      <DependentUpon>202003122325507_ram.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Specification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -413,6 +423,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003121000380_Cart.resx">
       <DependentUpon>202003121000380_Cart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003122309474_specification.resx">
+      <DependentUpon>202003122309474_specification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003122325507_ram.resx">
+      <DependentUpon>202003122325507_ram.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
